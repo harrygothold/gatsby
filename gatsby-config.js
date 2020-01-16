@@ -1,3 +1,9 @@
+const dotenv = require("dotenv")
+
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config()
+}
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Garb`,
@@ -19,10 +25,10 @@ module.exports = {
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-images'
-          }
-        ]
-      }
+            resolve: "gatsby-remark-images",
+          },
+        ],
+      },
     },
     {
       resolve: `gatsby-source-filesystem`,
@@ -43,6 +49,13 @@ module.exports = {
         theme_color: `#663399`,
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+      },
+    },
+    {
+      resolve: "gatsby-source-contentful",
+      options: {
+        spaceId: process.env.CONTENTFUL_SPACE_ID,
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
