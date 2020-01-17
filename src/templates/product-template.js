@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import Layout from "../components/layout"
 
-const ProductTemplate = ({ data: { contentfulProduct } }) => (
+const ProductTemplate = ({ data: { contentfulProduct }, location }) => (
   <Layout>
     <div style={{ marginLeft: "0 auto", width: "100%", textAlign: "center" }}>
       <h2>
@@ -12,7 +12,18 @@ const ProductTemplate = ({ data: { contentfulProduct } }) => (
           Added on {contentfulProduct.createdAt}
         </span>
       </h2>
+      <h4>£{contentfulProduct.price}</h4>
       <p>{contentfulProduct.description}</p>
+      <button
+        className="snipcart-add-item"
+        data-item-id={contentfulProduct.slug}
+        data-item-price={contentfulProduct.price}
+        data-item-image={contentfulProduct.image.file.url}
+        data-item-name={contentfulProduct.name}
+        data-item-url={location.pathname}
+      >
+        Add To Cart
+      </button>
       <Img
         style={{ margin: "0 auto", maxWidth: "600px" }}
         fluid={contentfulProduct.image.fluid}
@@ -24,6 +35,7 @@ const ProductTemplate = ({ data: { contentfulProduct } }) => (
 export const query = graphql`
   query($slug: String!) {
     contentfulProduct(slug: { eq: $slug }) {
+      slug
       name
       price
       description
@@ -31,6 +43,9 @@ export const query = graphql`
       image {
         fluid(maxWidth: 800) {
           ...GatsbyContentfulFluid
+        }
+        file {
+          url
         }
       }
     }
