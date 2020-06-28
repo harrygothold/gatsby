@@ -15,6 +15,13 @@ const ProductTemplate = ({ data: { contentfulProduct }, location }) => (
       <h4>£{contentfulProduct.price}</h4>
       <p>{contentfulProduct.description}</p>
       <button
+        style={{
+          background: "darkorange",
+          color: "white",
+          padding: "0.3em",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
         className="snipcart-add-item"
         data-item-id={contentfulProduct.slug}
         data-item-price={contentfulProduct.price}
